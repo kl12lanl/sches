@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-[#161512]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChessHome Pro & Lichess Ecosystem</title>
+    
+    <!-- Стили и Библиотеки: Tailwind, Chessground, Chess.js -->
+    <script src="https://tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <script src="https://cloudflare.com"></script>
+    <script src="https://cloudflare.com"></script>
+
+    <style>
+        /* Премиум стили оригинальной доски Lichess */
+        .cg-wrap board {
+            background-image: url('https://lichess1.org') !important;
+            background-size: cover;
+            border-radius: 4px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.6), 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .cg-wrap .piece {
+            background-image: url('https://lichess1.org') !important;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a1917; }
+        ::-webkit-scrollbar-thumb { background: #363431; border-radius: 3px; }
+    </style>
+</head>
+<body class="h-full text-[#bababa] font-sans flex flex-col overflow-hidden">
+
+    <!-- ОБЩИЙ ХЕДЕР ДЛЯ ВСЕХ СТРАНИЦ -->
+    <header class="bg-[#1e1c18] border-b border-[#2d2b27] px-6 py-3 flex items-center justify-between shadow-xl z-50">
+        <div class="flex items-center space-x-8">
+            <button onclick="navigateTo('main-screen')" class="text-xl font-bold tracking-wider text-white flex items-center focus:outline-none">
+                <span class="text-[#e5c158] mr-2">✦</span> CHESSHOME <span class="text-xs bg-[#e5c158] text-black px-1.5 py-0.5 rounded font-black ml-2">PRO</span>
+            </button>
+            <nav class="hidden lg:flex space-x-6 text-sm font-semibold">
+                <button onclick="navigateTo('main-screen')" class="text-white hover:text-[#e5c158] transition">Главная</button>
+                <button onclick="startQuickGame('3+2', 'Блиц')" class="hover:text-white transition">Быстрая игра</button>
+                <span class="text-red-400 flex items-center cursor-pointer">● ChessHome TV</span>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span class="text-xs text-gray-500 font-mono hidden sm:inline">Онлайн: 142,504</span>
+            <div class="w-8 h-8 rounded-full bg-[#363431] border border-[#e5c158] flex items-center justify-center text-white font-bold text-xs">GM</div>
+        </div>
+    </header>
+
+    <!-- СТРАНИЦА 1: ГЛАВНАЯ СТРАНИЦА (Изначально видима) -->
+    <main id="main-screen" class="flex-1 grid grid-cols-1 xl:grid-cols-12 gap-6 p-6 max-w-[1600px] w-full mx-auto overflow-y-auto transition-opacity duration-200">
+        
+        <!-- ЛЕВАЯ КОЛОНКА: Вызовы -->
+        <section class="xl:col-span-4 flex flex-col space-y-4">
+            <div class="bg-[#262421] border border-[#2d2b27] rounded p-4 shadow-lg">
+                <h2 class="text-white font-bold text-sm uppercase tracking-wider mb-4 border-b border-[#363431] pb-2">Быстрый старт</h2>
+                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                    <button onclick="startQuickGame('1+0', 'Пуля')" class="bg-[#32302c] hover:bg-[#3d3a35] p-3 rounded border border-transparent hover:border-[#e5c158] transition">
+                        <div class="font-bold text-white">1+0</div><div class="text-gray-500 text-[10px]">Пуля</div>
+                    </button>
+                    <button onclick="startQuickGame('3+2', 'Блиц')" class="bg-[#32302c] hover:bg-[#3d3a35] p-3 rounded border border-[#e5c158] transition">
+                        <div class="font-bold text-[#e5c158]">3+2</div><div class="text-[#e5c158] text-[10px]">Блиц</div>
+                    </button>
+                    <button onclick="startQuickGame('5+3', 'Блиц')" class="bg-[#32302c] hover:bg-[#3d3a35] p-3 rounded border border-transparent hover:border-[#e5c158] transition">
+                        <div class="font-bold text-white">5+3</div><div class="text-gray-500 text-[10px]">Блиц</div>
+                    </button>
+                    <button onclick="startQuickGame('10+0', 'Рапид')" class="bg-[#32302c] hover:bg-[#3d3a35] p-3 rounded border border-transparent hover:border-[#e5c158] transition">
+                        <div class="font-bold text-white">10+0</div><div class="text-gray-500 text-[10px]">Рапид</div>
+                    </button>
+                    <button onclick="startQuickGame('30+0', 'Классика')" class="bg-[#32302c] hover:bg-[#3d3a35] p-3 rounded border border-transparent hover:border-[#e5c158] transition">
+                        <div class="font-bold text-white">30+0</div><div class="text-gray-500 text-[10px]">Классика</div>
+                    </button>
+                    <button onclick="startQuickGame('Кастом', 'Товарищеский')" class="bg-[#2d2b27] hover:bg-[#363431] p-3 rounded border border-dashed border-[#454340] text-gray-400 font-bold">Кастом</button>
+                </div>
+            </div>
+
+            <div class="bg-[#262421] border border-[#2d2b27] rounded p-4 shadow-lg flex-1">
+                <h2 class="text-white font-bold text-sm uppercase tracking-wider mb-3 border-b border-[#363431] pb-2">Режимы партии</h2>
+                <div class="space-y-2">
+                    <button onclick="startQuickGame('Игрок против Игрока', 'Мультиплеер')" class="w-full bg-[#32302c] hover:bg-[#3d3a35] text-left p-3 rounded flex items-center justify-between transition group">
+                        <div>
+                            <div class="text-white text-sm font-semibold group-hover:text-[#e5c158]">Сыграть с другом</div>
+                            <div class="text-xs text-gray-500">Игра по локальной сессии</div>
+                        </div>
+                        <span class="text-xl text-gray-600 group-hover:text-[#e5c158]">➔</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЦЕНТРАЛЬНАЯ КОЛОНКА: Турниры -->
+        <section class="xl:col-span-5 flex flex-col space-y-4">
+            <div class="bg-[#262421] border border-[#2d2b27] rounded overflow-hidden shadow-lg flex flex-col">
+                <div class="bg-[#1e1c18] px-4 py-2.5 border-b border-[#2d2b27] flex justify-between items-center">
+                    <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse mr-2"></span> Прямой эфир: Топ-партия
+                    </span>
+                </div>
+                <div class="bg-[#161512] aspect-video flex items-center justify-center relative p-4">
+                    <div class="text-center z-10">
+                        <div class="text-white font-bold text-sm mb-1">GM Carlsen vs GM Nakamura</div>
+                        <div class="text-xs text-[#e5c158] font-mono">Трансляция активна</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ПРАВАЯ КОЛОНКА: Лидерборд -->
+        <section class="xl:col-span-3 flex flex-col space-y-4">
+            <div class="bg-[#262421] border border-[#2d2b27] rounded p-4 shadow-lg flex-1">
+                <h2 class="text-white font-bold text-sm uppercase tracking-wider mb-3 border-b border-[#363431] pb-2">Рейтинг ChessHome</h2>
+                <div class="text-xs space-y-2">
+                    <div class="flex justify-between p-1"><span class="text-white">1. Master_Pro</span><span class="text-[#e5c158] font-bold">2894</span></div>
+                    <div class="flex justify-between p-1"><span class="text-white">2. Stockfish_Bot</span><span class="text-gray-400">2600</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- СТРАНИЦА 2: ИГРОВАЯ ЗОНА (Изначально скрыта через класс 'hidden') -->
+    <main id="game-screen" class="hidden flex-1 grid grid-cols-1 xl:grid-cols-12 gap-6 p-6 max-w-[1600px] w-full mx-auto overflow-hidden transition-opacity duration-200">
+        
+        <!-- Панель анализа (Левая) -->
+        <div class="xl:col-span-3 flex flex-col space-y-4">
+            <div class="bg-[#262421] border border-[#2d2b27] rounded p-4 shadow-xl">
+                <div class="flex justify-between items-center mb-3">
+                    <span id="current-mode-tag" class="text-xs font-bold text-gray-400 uppercase tracking-widest">Блиц 3+2</span>
+                    <span class="text-xs font-mono font-bold bg-[#161512] text-[#e5c158] px-2 py-0.5 rounded border border-[#363431]" id="evaluation">+0.0</span>
+                </div>
+                <div class="w-full bg-[#161512] h-2.5 rounded-full overflow-hidden flex border border-[#363431]">
+                    <div id="eval-bar-white" class="bg-white h-full transition-all duration-300" style="width: 50%"></div>
+                </div>
+            </div>
+            <div class="bg-[#262421] border border-[#2d2b27] rounded p-4 flex-1 flex flex-col justify-between">
+                <button onclick="navigateTo('main-screen')" class="w-full bg-[#363431] hover:bg-[#454340] text-white text-sm font-bold py-2.5 rounded transition border border-[#454340]">Выйти в Главное меню</button>
+            </div>
+        </div>
+
+        <!-- Поле доски Lichess (Центр) -->
